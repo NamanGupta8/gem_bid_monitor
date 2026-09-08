@@ -16,6 +16,7 @@ DATA_DIR.mkdir(exist_ok=True)
 # Consignee states to search (must match GeM's exact naming, e.g. "JAMMU & KASHMIR")
 STATES = [
     "JAMMU & KASHMIR",
+    "LADAKH"
 ]
 
 PRODUCTS_FILE = DATA_DIR / "products.json"
