@@ -20,7 +20,15 @@ export class App implements OnInit {
   error = signal<string | null>(null);
   lastChecked = signal<Date | null>(null);
 
-  filters = signal<BidFilters>({ search: '', ministry: '', keyword: '', dateFrom: '', dateTo: '' });
+  filters = signal<BidFilters>({
+    search: '',
+    ministry: '',
+    keyword: '',
+    startDateFrom: '',
+    startDateTo: '',
+    endDateFrom: '',
+    endDateTo: '',
+  });
 
   ministries = computed(() =>
     Array.from(new Set(this.matches().map((m) => m.ministry).filter(Boolean))).sort()
@@ -33,8 +41,6 @@ export class App implements OnInit {
   filteredMatches = computed(() => {
     const f = this.filters();
     const term = f.search.trim().toLowerCase();
-    const fromDate = f.dateFrom ? new Date(f.dateFrom) : null;
-    const toDate = f.dateTo ? new Date(`${f.dateTo}T23:59:59`) : null;
 
     return this.matches().filter((m) => {
       const matchesSearch =
@@ -44,14 +50,23 @@ export class App implements OnInit {
         m.department.toLowerCase().includes(term);
       const matchesMinistry = !f.ministry || m.ministry === f.ministry;
       const matchesKeyword = !f.keyword || m.matched_keywords.includes(f.keyword);
+      const matchesStartDate = this.inDateRange(m.start_date, f.startDateFrom, f.startDateTo);
+      const matchesEndDate = this.inDateRange(m.end_date, f.endDateFrom, f.endDateTo);
 
-      const endDate = m.end_date ? new Date(m.end_date) : null;
-      const matchesDateFrom = !fromDate || (endDate !== null && endDate >= fromDate);
-      const matchesDateTo = !toDate || (endDate !== null && endDate <= toDate);
-
-      return matchesSearch && matchesMinistry && matchesKeyword && matchesDateFrom && matchesDateTo;
+      return matchesSearch && matchesMinistry && matchesKeyword && matchesStartDate && matchesEndDate;
     });
   });
+
+  /** True if `dateStr` falls within [from, to] (inclusive). Empty from/to means no bound on that side. */
+  private inDateRange(dateStr: string, from: string, to: string): boolean {
+    if (!from && !to) return true;
+    if (!dateStr) return false;
+
+    const date = new Date(dateStr);
+    if (from && date < new Date(from)) return false;
+    if (to && date > new Date(`${to}T23:59:59`)) return false;
+    return true;
+  }
 
   ngOnInit(): void {
     this.loadMatches();

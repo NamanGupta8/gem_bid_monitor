@@ -5,8 +5,10 @@ export interface BidFilters {
   search: string;
   ministry: string;
   keyword: string;
-  dateFrom: string; // 'YYYY-MM-DD' or '' for no lower bound
-  dateTo: string;   // 'YYYY-MM-DD' or '' for no upper bound
+  startDateFrom: string; // 'YYYY-MM-DD' or '' for no lower bound
+  startDateTo: string;   // 'YYYY-MM-DD' or '' for no upper bound
+  endDateFrom: string;   // 'YYYY-MM-DD' or '' for no lower bound
+  endDateTo: string;     // 'YYYY-MM-DD' or '' for no upper bound
 }
 
 @Component({
@@ -23,16 +25,20 @@ export class FilterBar {
   search = signal('');
   ministry = signal('');
   keyword = signal('');
-  dateFrom = signal('');
-  dateTo = signal('');
+  startDateFrom = signal('');
+  startDateTo = signal('');
+  endDateFrom = signal('');
+  endDateTo = signal('');
 
   emit(): void {
     this.filtersChanged.emit({
       search: this.search(),
       ministry: this.ministry(),
       keyword: this.keyword(),
-      dateFrom: this.dateFrom(),
-      dateTo: this.dateTo(),
+      startDateFrom: this.startDateFrom(),
+      startDateTo: this.startDateTo(),
+      endDateFrom: this.endDateFrom(),
+      endDateTo: this.endDateTo(),
     });
   }
 
@@ -51,13 +57,23 @@ export class FilterBar {
     this.emit();
   }
 
-  onDateFromChange(value: string): void {
-    this.dateFrom.set(value);
+  onStartDateFromChange(value: string): void {
+    this.startDateFrom.set(value);
     this.emit();
   }
 
-  onDateToChange(value: string): void {
-    this.dateTo.set(value);
+  onStartDateToChange(value: string): void {
+    this.startDateTo.set(value);
+    this.emit();
+  }
+
+  onEndDateFromChange(value: string): void {
+    this.endDateFrom.set(value);
+    this.emit();
+  }
+
+  onEndDateToChange(value: string): void {
+    this.endDateTo.set(value);
     this.emit();
   }
 }

@@ -1,50 +1,73 @@
-<div class="flex flex-wrap items-center gap-3 rounded-md border border-slate-200 bg-white px-4 py-3">
-  <input
-    type="text"
-    placeholder="Search bid no, items, department…"
-    [ngModel]="search()"
-    (ngModelChange)="onSearchChange($event)"
-    class="min-w-[240px] flex-1 rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-accent-600 focus:outline-none focus:ring-1 focus:ring-accent-600"
-  />
-
-  <select
-    [ngModel]="ministry()"
-    (ngModelChange)="onMinistryChange($event)"
-    class="cursor-pointer rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-900 focus:border-accent-600 focus:outline-none focus:ring-1 focus:ring-accent-600"
-  >
-    <option value="">All ministries</option>
-    @for (m of ministries(); track m) {
-      <option [value]="m">{{ m }}</option>
-    }
-  </select>
-
-  <select
-    [ngModel]="keyword()"
-    (ngModelChange)="onKeywordChange($event)"
-    class="cursor-pointer rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-900 focus:border-accent-600 focus:outline-none focus:ring-1 focus:ring-accent-600"
-  >
-    <option value="">All matched keywords</option>
-    @for (k of keywords(); track k) {
-      <option [value]="k">{{ k }}</option>
-    }
-  </select>
-
-  <div class="flex items-center gap-2 text-sm text-slate-500">
-    <label for="date-from">End date:</label>
+<div class="flex flex-col gap-3 rounded-md border border-slate-200 bg-white px-4 py-3">
+  <div class="flex flex-wrap items-center gap-3">
     <input
-      id="date-from"
-      type="date"
-      [ngModel]="dateFrom()"
-      (ngModelChange)="onDateFromChange($event)"
-      class="cursor-pointer rounded-md border border-slate-300 px-2 py-1.5 text-sm text-slate-900 focus:border-accent-600 focus:outline-none focus:ring-1 focus:ring-accent-600"
+      type="text"
+      placeholder="Search bid no, items, department…"
+      [ngModel]="search()"
+      (ngModelChange)="onSearchChange($event)"
+      class="min-w-[240px] flex-1 rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-accent-600 focus:outline-none focus:ring-1 focus:ring-accent-600"
     />
-    <span>to</span>
-    <input
-      id="date-to"
-      type="date"
-      [ngModel]="dateTo()"
-      (ngModelChange)="onDateToChange($event)"
-      class="cursor-pointer rounded-md border border-slate-300 px-2 py-1.5 text-sm text-slate-900 focus:border-accent-600 focus:outline-none focus:ring-1 focus:ring-accent-600"
-    />
+
+    <select
+      [ngModel]="ministry()"
+      (ngModelChange)="onMinistryChange($event)"
+      class="cursor-pointer rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-900 focus:border-accent-600 focus:outline-none focus:ring-1 focus:ring-accent-600"
+    >
+      <option value="">All ministries</option>
+      @for (m of ministries(); track m) {
+        <option [value]="m">{{ m }}</option>
+      }
+    </select>
+
+    <select
+      [ngModel]="keyword()"
+      (ngModelChange)="onKeywordChange($event)"
+      class="cursor-pointer rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-900 focus:border-accent-600 focus:outline-none focus:ring-1 focus:ring-accent-600"
+    >
+      <option value="">All matched keywords</option>
+      @for (k of keywords(); track k) {
+        <option [value]="k">{{ k }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+    <div class="flex items-center gap-2 text-sm text-slate-500">
+      <label for="start-date-from">Start date:</label>
+      <input
+        id="start-date-from"
+        type="date"
+        [ngModel]="startDateFrom()"
+        (ngModelChange)="onStartDateFromChange($event)"
+        class="cursor-pointer rounded-md border border-slate-300 px-2 py-1.5 text-sm text-slate-900 focus:border-accent-600 focus:outline-none focus:ring-1 focus:ring-accent-600"
+      />
+      <span>to</span>
+      <input
+        id="start-date-to"
+        type="date"
+        [ngModel]="startDateTo()"
+        (ngModelChange)="onStartDateToChange($event)"
+        class="cursor-pointer rounded-md border border-slate-300 px-2 py-1.5 text-sm text-slate-900 focus:border-accent-600 focus:outline-none focus:ring-1 focus:ring-accent-600"
+      />
+    </div>
+
+    <div class="flex items-center gap-2 text-sm text-slate-500">
+      <label for="end-date-from">End date:</label>
+      <input
+        id="end-date-from"
+        type="date"
+        [ngModel]="endDateFrom()"
+        (ngModelChange)="onEndDateFromChange($event)"
+        class="cursor-pointer rounded-md border border-slate-300 px-2 py-1.5 text-sm text-slate-900 focus:border-accent-600 focus:outline-none focus:ring-1 focus:ring-accent-600"
+      />
+      <span>to</span>
+      <input
+        id="end-date-to"
+        type="date"
+        [ngModel]="endDateTo()"
+        (ngModelChange)="onEndDateToChange($event)"
+        class="cursor-pointer rounded-md border border-slate-300 px-2 py-1.5 text-sm text-slate-900 focus:border-accent-600 focus:outline-none focus:ring-1 focus:ring-accent-600"
+      />
+    </div>
   </div>
 </div>

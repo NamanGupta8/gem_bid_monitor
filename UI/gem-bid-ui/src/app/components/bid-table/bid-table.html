@@ -7,6 +7,7 @@
         <th class="px-4 py-2 font-medium">Qty</th>
         <th class="px-4 py-2 font-medium">Department</th>
         <th class="px-4 py-2 font-medium">Ministry</th>
+        <th class="px-4 py-2 font-medium">Start date</th>
         <th class="px-4 py-2 font-medium">End date</th>
         <th class="px-4 py-2 font-medium">Matched on</th>
       </tr>
@@ -26,6 +27,7 @@
           <td class="whitespace-nowrap px-4 py-2 font-mono text-slate-700">{{ bid.quantity }}</td>
           <td class="px-4 py-2 text-slate-700">{{ bid.department }}</td>
           <td class="px-4 py-2 text-slate-700">{{ bid.ministry }}</td>
+          <td class="whitespace-nowrap px-4 py-2 font-mono text-slate-700">{{ bid.start_date | date:'mediumDate' }}</td>
           <td class="whitespace-nowrap px-4 py-2 font-mono text-slate-700">{{ bid.end_date | date:'mediumDate' }}</td>
           <td class="px-4 py-2">
             <div class="flex flex-wrap gap-1">
