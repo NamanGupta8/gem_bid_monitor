@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody class="divide-y divide-slate-100">
-      @for (bid of bids(); track bid.bid_no) {
+      @for (bid of pagedBids(); track bid.bid_no) {
         <tr class="hover:bg-slate-50">
           <td class="whitespace-nowrap px-4 py-2 font-mono">
             <a
@@ -44,4 +44,23 @@
       }
     </tbody>
   </table>
+
+  @if (bids().length > 0) {
+    <div class="flex items-center justify-between border-t border-slate-200 px-4 py-2 text-sm text-slate-500">
+      <span>Showing {{ rangeStart() }}–{{ rangeEnd() }} of {{ bids().length }}</span>
+      <div class="flex items-center gap-2">
+        <button
+          (click)="prevPage()"
+          [disabled]="currentPage() === 1"
+          class="cursor-pointer rounded-md border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+        >Prev</button>
+        <span class="font-mono">Page {{ currentPage() }} of {{ totalPages() }}</span>
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage() === totalPages()"
+          class="cursor-pointer rounded-md border border-slate-300 px-2 py-1 text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+        >Next</button>
+      </div>
+    </div>
+  }
 </div>
