@@ -17,6 +17,15 @@ export class BidTable {
 
   private currentPageRaw = signal(1);
 
+  // Always shown oldest-start-date-first — no user-facing sort toggle.
+  sortedBids = computed(() =>
+    [...this.bids()].sort((a, b) => {
+      const aTime = a.start_date ? new Date(a.start_date).getTime() : 0;
+      const bTime = b.start_date ? new Date(b.start_date).getTime() : 0;
+      return aTime - bTime;
+    })
+  );
+
   totalPages = computed(() => Math.max(1, Math.ceil(this.bids().length / this.pageSize)));
 
   // Clamped so a stale page number can never point past the end (e.g. if a
@@ -25,7 +34,7 @@ export class BidTable {
 
   pagedBids = computed(() => {
     const start = (this.currentPage() - 1) * this.pageSize;
-    return this.bids().slice(start, start + this.pageSize);
+    return this.sortedBids().slice(start, start + this.pageSize);
   });
 
   rangeStart = computed(() => (this.bids().length === 0 ? 0 : (this.currentPage() - 1) * this.pageSize + 1));
