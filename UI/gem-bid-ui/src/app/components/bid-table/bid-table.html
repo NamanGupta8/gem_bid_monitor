@@ -1,0 +1,47 @@
+<div class="overflow-hidden rounded-md border border-slate-200 bg-white">
+  <table class="w-full text-left text-sm">
+    <thead class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+      <tr>
+        <th class="px-4 py-2 font-medium">Bid No.</th>
+        <th class="px-4 py-2 font-medium">Items</th>
+        <th class="px-4 py-2 font-medium">Qty</th>
+        <th class="px-4 py-2 font-medium">Department</th>
+        <th class="px-4 py-2 font-medium">Ministry</th>
+        <th class="px-4 py-2 font-medium">End date</th>
+        <th class="px-4 py-2 font-medium">Matched on</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-100">
+      @for (bid of bids(); track bid.bid_no) {
+        <tr class="hover:bg-slate-50">
+          <td class="whitespace-nowrap px-4 py-2 font-mono">
+            <a
+              [href]="bidLink(bid)"
+              target="_blank"
+              rel="noopener"
+              class="cursor-pointer text-accent-600 hover:text-accent-700 hover:underline"
+            >{{ bid.bid_no }}</a>
+          </td>
+          <td class="max-w-md truncate px-4 py-2 text-slate-700" [title]="bid.items">{{ bid.items }}</td>
+          <td class="whitespace-nowrap px-4 py-2 font-mono text-slate-700">{{ bid.quantity }}</td>
+          <td class="px-4 py-2 text-slate-700">{{ bid.department }}</td>
+          <td class="px-4 py-2 text-slate-700">{{ bid.ministry }}</td>
+          <td class="whitespace-nowrap px-4 py-2 font-mono text-slate-700">{{ bid.end_date | date:'mediumDate' }}</td>
+          <td class="px-4 py-2">
+            <div class="flex flex-wrap gap-1">
+              @for (k of bid.matched_keywords; track k) {
+                <span class="rounded-full bg-accent-100 px-2 py-0.5 text-xs text-accent-700">{{ k }}</span>
+              }
+            </div>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="7" class="px-4 py-10 text-center text-sm text-slate-400">
+            No bids match your filters yet. Try "Check now" or add keywords in <span class="font-mono">data/products.json</span>.
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
