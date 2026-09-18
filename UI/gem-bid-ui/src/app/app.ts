@@ -1,5 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { BidService } from './services/bid.service';
 import { MatchedBid } from './models/bid.model';
 import { FilterBar, BidFilters } from './components/filter-bar/filter-bar';
@@ -98,8 +99,12 @@ export class App implements OnInit {
         this.checking.set(false);
         this.loadMatches();
       },
-      error: () => {
-        this.error.set('Check failed — see the uvicorn terminal for details.');
+      error: (err: HttpErrorResponse) => {
+        this.error.set(
+          err.status === 409
+            ? (err.error?.detail ?? 'A check is already in progress on another device — try again shortly.')
+            : 'Check failed — see the uvicorn terminal for details.'
+        );
         this.checking.set(false);
       },
     });
